@@ -7,8 +7,7 @@ ENV NODE_ENV="production"
 
 COPY package-lock.json package.json ./
 
-RUN apk update && apk add python3 build-base && npm ci --ignore-scripts
-
+RUN apk update && apk add python3 build-base && npm ci --ignore-scripts && npm rebuild
 COPY . .
 
-CMD [ "npm", "start" ]
+ENTRYPOINT [ "node", "src/server.js" ]
