@@ -39,6 +39,42 @@ CMD [ "npm", "start" ]
 
 You can proceed [to building the application](https://docs.docker.com/get-started/workshop/02_our_app/#build-the-apps-image).
 
+Building and running (quick start)
+
+- Build the Docker image from the project root:
+
+  ```sh
+  docker build -t soul:latest .
+  ```
+
+  If you are building on a non-amd64 machine (for example Apple Silicon), add the platform flag:
+
+  ```sh
+  docker build --platform linux/amd64 -t soul:latest .
+  ```
+
+- Run Soul with a persistent SQLite database (recommended):
+
+  ```sh
+  mkdir -p ./data && touch ./data/soul.db
+  docker run --name soul -p 8000:8000 -v "$(pwd)/data":/data -e DB=/data/soul.db -d soul:latest
+  ```
+
+- Verify the server is running:
+
+  ```sh
+  curl http://localhost:8000/api/tables
+  ```
+
+- View logs and stop/remove the container:
+
+  ```sh
+  docker logs -f soul
+  docker stop soul && docker rm soul
+  ```
+
+For more examples (using an .env file, auth mode and a docker-compose snippet), see docs/docker.md for step-by-step instructions.
+
 ### npm
 
 ```bash
